@@ -50,6 +50,7 @@ function GeneratePCB() {
             >  
               Component Specific  
             </Button>  
+            <br></br>
             <Button  
               variant="outlined"  
               color="secondary"  
@@ -59,8 +60,8 @@ function GeneratePCB() {
               onClick={() => handleOptionSelect('independent')}  
             >  
               Component Independent  
-            </Button>  
-          </Box>  
+            </Button>
+          </Box>
         );  
       case 1:  
         return selectedOption === 'specific' ? (  

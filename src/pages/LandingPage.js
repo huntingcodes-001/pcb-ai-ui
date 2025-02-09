@@ -65,7 +65,7 @@ function LandingPage() {
           </Grid>  
           <Grid item xs={12} md={6}>  
             <StyledIllustration  
-              src="/images/zak.jpg" // Ensure this path is correct  
+              src="/images/zak.jpg"
               alt="PCB Illustration"  
             />  
           </Grid>  

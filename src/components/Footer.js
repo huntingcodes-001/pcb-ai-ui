@@ -18,7 +18,7 @@ function Footer() {
             ? theme.palette.grey[200]  
             : theme.palette.grey[800],  
       }}  
-    >  
+    > 
       <Container maxWidth="md">  
         <Grid container spacing={4} justifyContent="space-between">  
           {/* About Section */}  
