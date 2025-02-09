@@ -1,36 +1,49 @@
-import React, { useState, useMemo } from 'react';
-import { createRoot } from 'react-dom/client'; // Import createRoot
-import App from './App';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import getDesignTokens from './theme';
+// src/index.js  
+import React, { useState, useMemo, useEffect } from 'react';  
+import { createRoot } from 'react-dom/client';  
+import App from './App';  
+import { ThemeProvider, createTheme } from '@mui/material/styles';  
+import CssBaseline from '@mui/material/CssBaseline';  
+import getDesignTokens from './theme';  
 
-function Main() {
-  const [mode, setMode] = useState('light');
+function Main() {  
+  const [mode, setMode] = useState('light');  
 
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
-  );
+  // Load theme preference from localStorage  
+  useEffect(() => {  
+    const savedMode = localStorage.getItem('preferred-theme');  
+    if (savedMode) {  
+      setMode(savedMode);  
+    }  
+  }, []);  
 
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const colorMode = useMemo(  
+    () => ({  
+      toggleColorMode: () => {  
+        setMode((prevMode) => {  
+          const newMode = prevMode === 'light' ? 'dark' : 'light';  
+          localStorage.setItem('preferred-theme', newMode);  
+          return newMode;  
+        });  
+      },  
+    }),  
+    []  
+  );  
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App colorMode={colorMode} />
-    </ThemeProvider>
-  );
-}
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);  
 
-const container = document.getElementById('root'); // Get the root element
-const root = createRoot(container); // Create a root
-root.render( // Use root.render
-  <React.StrictMode>
-    <Main />
-  </React.StrictMode>
-);
+  return (  
+    <ThemeProvider theme={theme}>  
+      <CssBaseline />  
+      <App colorMode={colorMode} />  
+    </ThemeProvider>  
+  );  
+}  
+
+const container = document.getElementById('root');  
+const root = createRoot(container);  
+root.render(  
+  <React.StrictMode>  
+    <Main />  
+  </React.StrictMode>  
+);  

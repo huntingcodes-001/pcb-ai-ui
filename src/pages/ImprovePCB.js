@@ -10,6 +10,7 @@ import {
   FormGroup,  
   Grid,  
   Paper,  
+  CircularProgress,  
 } from '@mui/material';  
 import UploadFileIcon from '@mui/icons-material/UploadFile';  
 import { useSnackbar } from '../components/SnackbarContext';  
@@ -24,6 +25,7 @@ function ImprovePCB() {
     compliance: false,  
   });  
   const showSnackbar = useSnackbar();  
+  const [loading, setLoading] = useState(false);  
   
   const handleFileChange = (e) => {  
     setFile(e.target.files[0]);  
@@ -41,10 +43,14 @@ function ImprovePCB() {
       showSnackbar('Please upload a PCB file.', 'error');  
       return;  
     }  
-    // Handle PCB improvement logic here  
-    console.log('Attached File:', file);  
-    console.log('Selected Parameters:', checks);  
-    showSnackbar('PCB Improvement Processed Successfully!', 'success');  
+    setLoading(true);  
+    // Simulate an API call with a timeout  
+    setTimeout(() => {  
+      setLoading(false);  
+      console.log('Attached File:', file);  
+      console.log('Selected Parameters:', checks);  
+      showSnackbar('PCB Improvement Processed Successfully!', 'success');  
+    }, 2000);  
   };  
   
   return (  
@@ -62,7 +68,7 @@ function ImprovePCB() {
               fullWidth  
             >  
               Upload PCB File  
-              <input type="file" hidden onChange={handleFileChange} />  
+              <input type="file" hidden onChange={handleFileChange} accept=".pcb,.pdf,.zip" />  
             </Button>  
             {file && (  
               <Typography variant="body1" sx={{ mt: 2 }}>  
@@ -72,7 +78,7 @@ function ImprovePCB() {
           </Grid>  
           <Grid item xs={12} sm={6}>  
             <Typography variant="h6" gutterBottom>  
-              Parameters  
+              Checklist Parameters  
             </Typography>  
             <FormGroup>  
               {Object.keys(checks).map((key) => (  
@@ -93,15 +99,30 @@ function ImprovePCB() {
           </Grid>  
         </Grid>  
         <Box sx={{ mt: 4, textAlign: 'center' }}>  
-          <Button  
-            variant="contained"  
-            color="primary"  
-            size="large"  
-            onClick={handleImprove}  
-            disabled={!file}  
-          >  
-            Improve PCB  
-          </Button>  
+          <Box sx={{ position: 'relative', display: 'inline-flex' }}>  
+            <Button  
+              variant="contained"  
+              color="primary"  
+              size="large"  
+              onClick={handleImprove}  
+              disabled={loading || !file}  
+            >  
+              Improve PCB  
+            </Button>  
+            {loading && (  
+              <CircularProgress  
+                size={24}  
+                sx={{  
+                  color: 'primary.main',  
+                  position: 'absolute',  
+                  top: '50%',  
+                  left: '50%',  
+                  marginTop: '-12px',  
+                  marginLeft: '-12px',  
+                }}  
+              />  
+            )}  
+          </Box>  
         </Box>  
       </Paper>  
     </Container>  
