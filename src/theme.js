@@ -1,12 +1,12 @@
 // src/theme.js  
 import { createTheme } from '@mui/material/styles';  
-
+  
 const getDesignTokens = (mode) => ({  
   palette: {  
     mode,  
     ...(mode === 'light'  
       ? {  
-          // palette values for light mode  
+          // Palette values for light mode  
           primary: {  
             main: '#1976d2',  
           },  
@@ -19,7 +19,7 @@ const getDesignTokens = (mode) => ({
           },  
         }  
       : {  
-          // palette values for dark mode  
+          // Palette values for dark mode  
           primary: {  
             main: '#90caf9',  
           },  
@@ -45,5 +45,5 @@ const getDesignTokens = (mode) => ({
     },  
   },  
 });  
-
+  
 export default getDesignTokens;  

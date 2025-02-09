@@ -13,11 +13,14 @@ import { useTheme } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';  
 import MenuItem from '@mui/material/MenuItem';  
 import Button from '@mui/material/Button';  
+import { auth } from '../firebase';  
+import { useAuth } from '../contexts/AuthContext';  
   
 function Navbar({ colorMode }) {  
   const navigate = useNavigate();  
   const theme = useTheme();  
   const [anchorEl, setAnchorEl] = useState(null);  
+  const { currentUser } = useAuth();  
   
   const handleMenu = (event) => {  
     setAnchorEl(event.currentTarget);  
@@ -30,6 +33,17 @@ function Navbar({ colorMode }) {
   const handleNavigation = (path) => {  
     navigate(path);  
     handleClose();  
+  };  
+  
+  const handleLogout = async () => {  
+    try {  
+      await auth.signOut();  
+      handleClose();  
+      navigate('/login');  
+    } catch (error) {  
+      console.error(error);  
+      // Optionally, show a snackbar or alert here  
+    }  
   };  
   
   return (  
@@ -66,6 +80,14 @@ function Navbar({ colorMode }) {
             <MenuItem onClick={() => handleNavigation('/improve-pcb')}>Improve PCB</MenuItem>  
             <MenuItem onClick={() => handleNavigation('/about')}>About</MenuItem>  
             <MenuItem onClick={() => handleNavigation('/contact')}>Contact</MenuItem>  
+            {!currentUser ? (  
+              <>  
+                <MenuItem onClick={() => handleNavigation('/login')}>Log In</MenuItem>  
+                <MenuItem onClick={() => handleNavigation('/signup')}>Sign Up</MenuItem>  
+              </>  
+            ) : (  
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>  
+            )}  
           </Menu>  
         </Box>  
   
@@ -96,6 +118,20 @@ function Navbar({ colorMode }) {
           <Button color="inherit" onClick={() => navigate('/contact')}>  
             Contact  
           </Button>  
+          {!currentUser ? (  
+            <>  
+              <Button color="inherit" onClick={() => navigate('/login')}>  
+                Log In  
+              </Button>  
+              <Button color="inherit" onClick={() => navigate('/signup')}>  
+                Sign Up  
+              </Button>  
+            </>  
+          ) : (  
+            <Button color="inherit" onClick={handleLogout}>  
+              Log Out  
+            </Button>  
+          )}  
         </Box>  
   
         {/* Dark/Light Mode Toggle */}  

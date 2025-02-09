@@ -9,6 +9,8 @@ import {
   StepLabel,  
   Button,  
   Paper,  
+  Grid,  
+  Fade,  
 } from '@mui/material';  
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';  
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';  
@@ -26,6 +28,7 @@ function GeneratePCB() {
   };  
   
   const handleBack = () => {  
+    if (activeStep === 0) return;  
     setActiveStep((prev) => prev - 1);  
   };  
   
@@ -38,30 +41,34 @@ function GeneratePCB() {
     switch (activeStep) {  
       case 0:  
         return (  
-          <Box sx={{ mt: 4 }}>  
-            <Button  
-              variant="contained"  
-              color="primary"  
-              size="large"  
-              fullWidth  
-              startIcon={<BuildCircleIcon />}  
-              onClick={() => handleOptionSelect('specific')}  
-              sx={{ mb: 2 }}  
-            >  
-              Component Specific  
-            </Button>  
-            <br></br>
-            <Button  
-              variant="outlined"  
-              color="secondary"  
-              size="large"  
-              fullWidth  
-              startIcon={<SwapHorizIcon />}  
-              onClick={() => handleOptionSelect('independent')}  
-            >  
-              Component Independent  
-            </Button>
-          </Box>
+          <Fade in timeout={1000}>  
+            <Grid container spacing={2} sx={{ mt: 1,mb: 2, justifyContent: 'center' }}>  
+              <Grid item xs={12} sm={6}>  
+                <Button  
+                  variant="contained"  
+                  color="primary"  
+                  size="large"  
+                  fullWidth  
+                  startIcon={<BuildCircleIcon />}  
+                  onClick={() => handleOptionSelect('specific')}  
+                >  
+                  Component Specific  
+                </Button>  
+              </Grid>  
+              <Grid item xs={12} sm={6}>  
+                <Button  
+                  variant="outlined"  
+                  color="secondary"  
+                  size="large"  
+                  fullWidth  
+                  startIcon={<SwapHorizIcon />}  
+                  onClick={() => handleOptionSelect('independent')}  
+                >  
+                  Component Independent  
+                </Button>  
+              </Grid>  
+            </Grid>  
+          </Fade>  
         );  
       case 1:  
         return selectedOption === 'specific' ? (  
@@ -71,9 +78,11 @@ function GeneratePCB() {
         );  
       case 2:  
         return (  
-          <Typography variant="h6" sx={{ mt: 2 }}>  
-            PCB Generation Complete! Check the console for details.  
-          </Typography>  
+          <Box sx={{ mt: 2 }}>  
+            <Typography variant="h6" align="center">  
+              PCB Generation Complete! Check the console for details.  
+            </Typography>  
+          </Box>  
         );  
       default:  
         return 'Unknown step';  
@@ -81,7 +90,7 @@ function GeneratePCB() {
   };  
   
   return (  
-    <Container maxWidth="md" sx={{ mt: 8 }}>  
+    <Container maxWidth="md" sx={{ mt: 8, mb: 4 }}>  
       <Typography variant="h4" gutterBottom color="primary">  
         Generate PCB  
       </Typography>  
@@ -99,9 +108,18 @@ function GeneratePCB() {
             <Button disabled={activeStep === 0} onClick={handleBack}>  
               Back  
             </Button>  
-            <Button variant="contained" onClick={handleNext}>  
-              Next  
-            </Button>  
+            {activeStep < steps.length - 1 && (  
+              <Button variant="contained" onClick={handleNext}>  
+                Next  
+              </Button>  
+            )}  
+          </Box>  
+        )}  
+        {activeStep === steps.length && (  
+          <Box sx={{ mt: 4, mb: 6 }}> {/* Increased bottom margin */}  
+            <Typography variant="body1" align="center">  
+              Thank you for using PCB Pro!  
+            </Typography>  
           </Box>  
         )}  
       </Paper>  

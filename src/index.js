@@ -1,14 +1,14 @@
 // src/index.js  
 import React, { useState, useMemo, useEffect } from 'react';  
-import { createRoot } from 'react-dom/client';  
+import { createRoot } from 'react-dom/client'; // Import createRoot  
 import App from './App';  
 import { ThemeProvider, createTheme } from '@mui/material/styles';  
 import CssBaseline from '@mui/material/CssBaseline';  
 import getDesignTokens from './theme';  
-
+  
 function Main() {  
   const [mode, setMode] = useState('light');  
-
+  
   // Load theme preference from localStorage  
   useEffect(() => {  
     const savedMode = localStorage.getItem('preferred-theme');  
@@ -16,7 +16,7 @@ function Main() {
       setMode(savedMode);  
     }  
   }, []);  
-
+  
   const colorMode = useMemo(  
     () => ({  
       toggleColorMode: () => {  
@@ -29,9 +29,9 @@ function Main() {
     }),  
     []  
   );  
-
+  
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);  
-
+  
   return (  
     <ThemeProvider theme={theme}>  
       <CssBaseline />  
@@ -39,10 +39,10 @@ function Main() {
     </ThemeProvider>  
   );  
 }  
-
-const container = document.getElementById('root');  
-const root = createRoot(container);  
-root.render(  
+  
+const container = document.getElementById('root'); // Get the root element  
+const root = createRoot(container); // Create a root  
+root.render( // Use root.render  
   <React.StrictMode>  
     <Main />  
   </React.StrictMode>  

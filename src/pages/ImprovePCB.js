@@ -54,7 +54,7 @@ function ImprovePCB() {
   };  
   
   return (  
-    <Container maxWidth="md" sx={{ mt: 8 }}>  
+    <Container maxWidth="md" sx={{ mt: 8, mb: 4 }}>  
       <Typography variant="h4" gutterBottom color="primary">  
         Improve PCB  
       </Typography>  

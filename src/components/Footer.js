@@ -12,13 +12,13 @@ function Footer() {
       sx={{  
         py: 6,  
         px: 2,  
-        mt: 'auto',  
+        mt: 4, // Added margin-top for spacing  
         backgroundColor: (theme) =>  
           theme.palette.mode === 'light'  
             ? theme.palette.grey[200]  
             : theme.palette.grey[800],  
       }}  
-    > 
+    >  
       <Container maxWidth="md">  
         <Grid container spacing={4} justifyContent="space-between">  
           {/* About Section */}  
@@ -31,7 +31,7 @@ function Footer() {
               Streamline your electronics projects with ease and precision.  
             </Typography>  
           </Grid>  
-
+  
           {/* Links Section */}  
           <Grid item xs={12} sm={3}>  
             <Typography variant="h6" gutterBottom>  
@@ -49,25 +49,26 @@ function Footer() {
               Improve PCB  
             </Link>  
           </Grid>  
-
+  
           {/* Social Media Section */}  
           <Grid item xs={12} sm={3}>  
             <Typography variant="h6" gutterBottom>  
               Follow Us  
             </Typography>  
             <Box sx={{ display: 'flex', gap: 1 }}>  
-              <Link href="https://facebook.com" target="_blank" color="inherit">  
+              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" color="inherit">  
                 <FacebookIcon />  
               </Link>  
-              <Link href="https://twitter.com" target="_blank" color="inherit">  
+              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" color="inherit">  
                 <TwitterIcon />  
               </Link>  
-              <Link href="https://linkedin.com" target="_blank" color="inherit">  
+              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" color="inherit">  
                 <LinkedInIcon />  
               </Link>  
             </Box>  
           </Grid>  
         </Grid>  
+        {/* Additional Spacing Below Footer Content */}  
         <Box sx={{ mt: 4, textAlign: 'center' }}>  
           <Typography variant="body2" color="textSecondary">  
             © {new Date().getFullYear()} PCB Pro. All rights reserved.  
